@@ -61,7 +61,7 @@ public class KaratsubaAlgorithm {
 
     public static long[] decomposeOperands(long operand1, long operand2) {
         //dissect the given multiplicand and multiplier
-        //into a, b, c and d, where are then used for further calculations
+        //into a, b, c and d, which are then used for further calculations
         //return a, b, c and d and an array of integers
         int numberOfDigits = max(getIntLength(operand1), getIntLength(operand2));
         int midDigit = numberOfDigits / 2;
@@ -85,10 +85,9 @@ public class KaratsubaAlgorithm {
     }
 
     public static void main(String[] args) {
-        //request two numbers
-        long operand1 = requestOperand("Please enter an integer as operand 1:");
-        long operand2 = requestOperand("Please enter an integer as operand 2:");
-        long product = karatsubaMultiply(operand1, operand2);
+        long multiplicand = requestOperand("Please enter an integer as the multiplicand:");
+        long multiplier = requestOperand("Please enter an integer as multiplier:");
+        long product = karatsubaMultiply(multiplicand, multiplier);
         System.out.println("Product: " + product);
     }
 }
