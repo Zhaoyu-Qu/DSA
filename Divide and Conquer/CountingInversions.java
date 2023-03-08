@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -23,7 +22,7 @@ import java.util.Scanner;
         //obtain an integer array from user
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a space delimited array of integers and end with a new line.");
-        System.out.println("For example, \"1 2 3 4\"");
+        System.out.println("For example, \"1 2 3 4\":");
         String[] userInput = scanner.nextLine().split(" ");
         int[] array = new int[userInput.length];
         try {
@@ -35,18 +34,22 @@ import java.util.Scanner;
             System.exit(1);
         }
 
-
         mergeSortAndCountInversions(array);
-        System.out.println(numberOfInversions);
+
+        //output results to the console
+        if (numberOfInversions == 0) {
+            System.out.println("No inversions found!");
+        } else {
+            System.out.printf("%d inversion(s) found as follows:\n", numberOfInversions);
+            for (int[] inversion : inversions) {
+                System.out.printf("[%d, %d]\n", inversion[0], inversion[1]);
+            }
+        }
     }
 
     public static int[] mergeSortAndCountInversions(int[] array) {
         //base case
-        if (array.length == 2 && array[0] > array[1]) {
-            numberOfInversions++;
-            inversions.add(new int[]{array[0], array[1]});
-            return new int[] {array[1], array[0]};
-        } else if (array.length <= 2) {
+        if (array.length == 1) {
             return array;
         }
 
@@ -54,14 +57,19 @@ import java.util.Scanner;
         int[] sortedLeftArray = mergeSortAndCountInversions(Arrays.copyOfRange(array, 0, array.length / 2));
         int[] sortedRightArray = mergeSortAndCountInversions(Arrays.copyOfRange(array, array.length / 2, array.length));
 
-        //merge in ascending order and modify the running total of numberOfInversions where applicable
+        //merge in ascending order
+        //modify the running total of numberOfInversions and update the inversion record where applicable
         int[] mergedArray = new int[sortedLeftArray.length + sortedRightArray.length];
         for (int i = 0, j = 0; i + j < mergedArray.length;) {
-            if (j != sortedRightArray.length && (i == sortedLeftArray.length || sortedLeftArray[i] > sortedRightArray[j])) {
+            if (i == sortedLeftArray.length || (j != sortedRightArray.length && sortedLeftArray[i] > sortedRightArray[j])) {
                 mergedArray[i + j] = sortedRightArray[j];
-                j++;
                 numberOfInversions += sortedLeftArray.length - i;
-                // for (int a = 0; a )
+                //The step below updates the record of inversions and is not considered a part of the algorithm
+                //Making this comment in case you wonder if it affects the runtime
+                for (int k = i; k < sortedLeftArray.length; k++) {
+                    inversions.add(new int[]{sortedLeftArray[k], sortedRightArray[j]});
+                }
+                j++;
             } else if (j == sortedRightArray.length || sortedLeftArray[i] <= sortedRightArray[j]) {
                 mergedArray[i + j] = sortedLeftArray[i];
                 i++;
