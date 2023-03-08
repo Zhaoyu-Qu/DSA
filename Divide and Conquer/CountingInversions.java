@@ -13,30 +13,34 @@ import java.util.Scanner;
  * Similarly, array [4, 3, 2, 1] has 6 inversions, i.e. [4, 3], [4, 2], [4, 1], [3, 2], [3, 1], [2, 1]
  * 
  * Instinctively, one may be tempted to use a nested loop which results in a big O of n squared. By contrast, the algorithm
- * implemented in this class adopted a divide and conquer approach and achieves a run time of nlog(n)
+ * implemented in this class adopts a divide and conquer approach and achieves a run time of nlog(n)
  */
 
  public class CountingInversions {
     private static int numberOfInversions = 0;
     private static ArrayList<int[]> inversions = new ArrayList<>();
     public static void main(String[] args) {
+        //obtain an integer array from user
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter an array of integers and end with any non-integer character:");
-        ArrayList<Integer> array = new ArrayList<>();
+        System.out.println("Enter a space delimited array of integers and end with a new line.");
+        System.out.println("For example, \"1 2 3 4\"");
+        String[] userInput = scanner.nextLine().split(" ");
+        int[] array = new int[userInput.length];
         try {
-            while (true) {
-                array.add(scanner.nextInt());
+            for (int i = 0; i < array.length; i++) {
+                array[i] = Integer.parseInt(userInput[i]);
             }
-        } catch (InputMismatchException e) {
-            ;
+        } catch (NumberFormatException e) {
+            System.err.println("You must only enter integers!");
+            System.exit(1);
         }
 
-        int[] intArray = array.stream().mapToInt(Integer::intValue).toArray();
-        countInversions(intArray);
+
+        mergeSortAndCountInversions(array);
         System.out.println(numberOfInversions);
     }
 
-    public static int[] countInversions(int[] array) {
+    public static int[] mergeSortAndCountInversions(int[] array) {
         //base case
         if (array.length == 2 && array[0] > array[1]) {
             numberOfInversions++;
@@ -47,8 +51,8 @@ import java.util.Scanner;
         }
 
         //recursion
-        int[] sortedLeftArray = countInversions(Arrays.copyOfRange(array, 0, array.length / 2));
-        int[] sortedRightArray = countInversions(Arrays.copyOfRange(array, array.length / 2, array.length));
+        int[] sortedLeftArray = mergeSortAndCountInversions(Arrays.copyOfRange(array, 0, array.length / 2));
+        int[] sortedRightArray = mergeSortAndCountInversions(Arrays.copyOfRange(array, array.length / 2, array.length));
 
         //merge in ascending order and modify the running total of numberOfInversions where applicable
         int[] mergedArray = new int[sortedLeftArray.length + sortedRightArray.length];
