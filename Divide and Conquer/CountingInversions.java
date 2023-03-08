@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-
 /**
  * This algorithm counts the total number of inversions in a given array with a run time of O(nlog(n))
  * The idea is to do a merge sort on the array and keep track of the inversions found
@@ -14,6 +10,11 @@ import java.util.Scanner;
  * Instinctively, one may be tempted to use a nested loop which results in a big O of n squared. By contrast, the algorithm
  * implemented in this class adopts a divide and conquer approach and achieves a run time of nlog(n)
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
 
  public class CountingInversions {
     private static int numberOfInversions = 0;
