@@ -19,36 +19,8 @@ import java.util.Scanner;
  public class CountingInversions {
     private static int numberOfInversions = 0;
     private static ArrayList<int[]> inversions = new ArrayList<>();
-    public static void main(String[] args) {
-        //obtain an integer array from user
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a space delimited array of integers and end with a new line.");
-        System.out.println("For example, \"1 2 3 4\":");
-        String[] userInput = scanner.nextLine().split(" ");
-        int[] array = new int[userInput.length];
-        try {
-            for (int i = 0; i < array.length; i++) {
-                array[i] = Integer.parseInt(userInput[i]);
-            }
-        } catch (NumberFormatException e) {
-            System.err.println("You must only enter integers!");
-            System.exit(1);
-        }
 
-        mergeSortAndCountInversions(array);
-
-        //output results to the console
-        if (numberOfInversions == 0) {
-            System.out.println("No inversions found!");
-        } else {
-            System.out.printf("%d inversion(s) found as follows:\n", numberOfInversions);
-            for (int[] inversion : inversions) {
-                System.out.printf("[%d, %d]\n", inversion[0], inversion[1]);
-            }
-        }
-    }
-
-    public static int[] mergeSortAndCountInversions(int[] array) {
+    static int[] mergeSortAndCountInversions(int[] array) {
         //base case
         if (array.length == 1) {
             return array;
@@ -65,7 +37,7 @@ import java.util.Scanner;
             if (i == sortedLeftArray.length || (j != sortedRightArray.length && sortedLeftArray[i] > sortedRightArray[j])) {
                 mergedArray[i + j] = sortedRightArray[j];
                 numberOfInversions += sortedLeftArray.length - i;
-                //The step below updates the record of inversions and is not considered a part of the algorithm
+                //The loop below updates the record of inversions and is not considered a part of the algorithm
                 //Making this comment in case you wonder if it affects the runtime
                 for (int k = i; k < sortedLeftArray.length; k++) {
                     inversions.add(new int[]{sortedLeftArray[k], sortedRightArray[j]});
@@ -77,5 +49,35 @@ import java.util.Scanner;
             }
         }
         return mergedArray;
+    }
+
+    public static void main(String[] args) {
+        //obtain an integer array from user
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a space delimited array of integers and end with a new line.");
+        System.out.println("For example, \"1 2 3 4\":");
+        String[] userInput = scanner.nextLine().split(" ");
+        int[] array = new int[userInput.length];
+        try {
+            for (int i = 0; i < array.length; i++) {
+                array[i] = Integer.parseInt(userInput[i]);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("You must only enter integers!");
+            System.exit(1);
+        }
+
+        //apply the algorithm
+        mergeSortAndCountInversions(array);
+
+        //output results to the console
+        if (numberOfInversions == 0) {
+            System.out.println("No inversions found!");
+        } else {
+            System.out.printf("%d inversion(s) found as follows:\n", numberOfInversions);
+            for (int[] inversion : inversions) {
+                System.out.printf("[%d, %d]\n", inversion[0], inversion[1]);
+            }
+        }
     }
  }

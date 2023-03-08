@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static java.lang.Math.max;
 
 public class KaratsubaAlgorithm {
-    public static long karatsubaMultiply(long operand1, long operand2) {
+    static long karatsubaMultiply(long operand1, long operand2) {
         //recall n is the number of digits of the larger operand
         int n = max(getIntLength(operand1), getIntLength(operand2));
         //base case
@@ -36,7 +36,7 @@ public class KaratsubaAlgorithm {
         return (long) (Math.pow(10, n) * ac + Math.pow(10, n / 2) * adPlusBc + bd);
     }
 
-    public static int getIntLength(long integer) {
+    static int getIntLength(long integer) {
         //return the number of digits of the given integer
         int length = 0;
         do {
@@ -46,7 +46,7 @@ public class KaratsubaAlgorithm {
         return length;
     }
 
-    public static long requestOperand(String message) {
+    static long requestOperand(String message) {
         //prompt user with the argument message for a integer
         //keep doing so until the user complies
         Scanner scanner = new Scanner(System.in);
@@ -61,7 +61,7 @@ public class KaratsubaAlgorithm {
         }
     }
 
-    public static long[] decomposeOperands(long operand1, long operand2) {
+    static long[] decomposeOperands(long operand1, long operand2) {
         //dissect the given multiplicand and multiplier
         //into a, b, c and d, which are then used for further calculations
         //return a, b, c and d and an array of integers
