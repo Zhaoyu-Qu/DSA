@@ -1,11 +1,12 @@
 /**
  * The program requests for two integer operands and calculate the product using the Karatsuba algorithm
- * The Karatsuba algorithm is superior than the traditional grade school method in that its runtime is O(nlog(n)) instead of O(n2)
  * 
  * Here is how the algorithm works. Suppose the provided two operands are x == 1234, y == 5678
  * then a == 12, b == 34, c == 56, d == 78
  * We now claim the product of x and y, i.e. x * y == ac*10^n + (ad+bc)*10^(n/2)+bd
  * where n is the number of digits of the larger operand
+ * 
+ * The Karatsuba algorithm is superior than the traditional grade school method in that its runtime is O(nlog(n)) instead of O(n2)
  */
 
 import java.util.Scanner;
